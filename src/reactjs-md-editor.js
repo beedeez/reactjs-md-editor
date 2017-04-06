@@ -37,6 +37,7 @@ export class ReactMDEditor extends Component {
 		return Object.assign({
 			mode: 'markdown',
 			lineNumbers: false,
+			lineWrapping: true,
 			indentWithTabs: true,
 			tabSize: '2',
 		}, this.props.options);
