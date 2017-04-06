@@ -41,7 +41,7 @@
     "morgan": "^1.8.1",
     "react": "^15.0",
     "react-dom": "^15.0",
-		"reactjs-md-editor": "^1.0.0",
+		"reactjs-md-viewer": "git+https://github.com/beedeez/reactjs-md-viewer.git",
 		"webpack": "^2.3.3",
     "webpack-stream": "^3.2.0"
   },
