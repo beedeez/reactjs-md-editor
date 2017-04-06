@@ -1,6 +1,6 @@
 var gulp = require('gulp'),
     babel = require('gulp-babel'),
-    webpack = require('gulp-webpack-stream');
+    webpack = require('webpack-stream');
 
 gulp.task('server', function() {
   require('./test/server');
