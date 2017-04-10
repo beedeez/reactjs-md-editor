@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 
 import classNames from 'classnames';
@@ -12,11 +12,33 @@ import 'codemirror/addon/edit/continuelist';
 import { getCursorState, applyFormat } from './format.js';
 
 export class ReactMDEditor extends Component {
+	static defaultProps = {
+		disableButtonH1: false,
+		disableButtonH2: false,
+		disableButtonH3: false,
+		disableButtonBold: false,
+		disableButtonItalic: false,
+		disableButtonOList: false,
+		disableButtonUList: false,
+		disableButtonQuote: false,
+		disableButtonLink: false,
+		disableButtonImage: false
+	}
 	static propTypes = {
-		onChange: React.PropTypes.func,
-		options: React.PropTypes.object,
-		path: React.PropTypes.string,
-		value: React.PropTypes.string,
+		onChange: PropTypes.func,
+		options: PropTypes.object,
+		path: PropTypes.string,
+		value: PropTypes.string,
+		disableButtonH1: PropTypes.bool,
+		disableButtonH2: PropTypes.bool,
+		disableButtonH3: PropTypes.bool,
+		disableButtonBold: PropTypes.bool,
+		disableButtonItalic: PropTypes.bool,
+		disableButtonOList: PropTypes.bool,
+		disableButtonUList: PropTypes.bool,
+		disableButtonQuote: PropTypes.bool,
+		disableButtonLink: PropTypes.bool,
+		disableButtonImage: PropTypes.bool
 	}
 	constructor(props) {
     super(props);
@@ -103,16 +125,16 @@ export class ReactMDEditor extends Component {
 	renderToolbar () {
 		return (
 			<div className="MDEditor_toolbar">
-				{this.renderButton('h1', 'h1')}
-				{this.renderButton('h2', 'h2')}
-				{this.renderButton('h3', 'h3')}
-				{this.renderButton('bold', 'b')}
-				{this.renderButton('italic', 'i')}
-				{this.renderButton('oList', 'ol')}
-				{this.renderButton('uList', 'ul')}
-				{this.renderButton('quote', 'q')}
-				{this.renderButton('link', 'a')}
-				{this.renderButton('image', 'img')}
+				{!this.props.disableButtonH1 && this.renderButton('h1', 'h1')}
+				{!this.props.disableButtonH2 && this.renderButton('h2', 'h2')}
+				{!this.props.disableButtonH3 && this.renderButton('h3', 'h3')}
+				{!this.props.disableButtonBold && this.renderButton('bold', 'b')}
+				{!this.props.disableButtonItalic && this.renderButton('italic', 'i')}
+				{!this.props.disableButtonOList && this.renderButton('oList', 'ol')}
+				{!this.props.disableButtonUList && this.renderButton('uList', 'ul')}
+				{!this.props.disableButtonQuote && this.renderButton('quote', 'q')}
+				{!this.props.disableButtonLink && this.renderButton('link', 'a')}
+				{!this.props.disableButtonImage && this.renderButton('image', 'img')}
 			</div>
 		);
 	}
