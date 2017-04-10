@@ -1,6 +1,6 @@
 {
   "name": "reactjs-md-editor",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A markdown editor module for React",
   "main": "lib/reactjs-md-editor.js",
   "scripts": {
@@ -24,12 +24,12 @@
     "url": "https://github.com/beedeez/reactjs-md-editor/issues"
   },
   "homepage": "https://github.com/beedeez/reactjs-md-editor#readme",
-	"dependencies": {
-		"classnames": "^2.2.5",
+  "dependencies": {
+    "classnames": "^2.2.5",
     "codemirror": "^5.18.2"
-	},
-	"devDependencies": {
-		"babel-core": "^6.24.0",
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.0",
     "babel-loader": "^6.4.1",
     "babel-plugin-transform-class-properties": "^6.23.0",
     "babel-preset-es2015": "^6.24.0",
@@ -41,8 +41,8 @@
     "morgan": "^1.8.1",
     "react": "^15.0",
     "react-dom": "^15.0",
-		"reactjs-md-viewer": "git+https://github.com/beedeez/reactjs-md-viewer.git",
-		"webpack": "^2.3.3",
+    "reactjs-md-viewer": "git+https://github.com/beedeez/reactjs-md-viewer.git",
+    "webpack": "^2.3.3",
     "webpack-stream": "^3.2.0"
   },
   "peersDependencies": {
