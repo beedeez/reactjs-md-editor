@@ -22,8 +22,9 @@ export class ReactMDEditor extends Component {
 		disableButtonUList: false,
 		disableButtonQuote: false,
 		disableButtonLink: false,
-		disableButtonImage: false
-	}
+		disableButtonImage: false,
+		disableAudioButton: false
+	};
 	static propTypes = {
 		onChange: PropTypes.func,
 		options: PropTypes.object,
@@ -38,31 +39,38 @@ export class ReactMDEditor extends Component {
 		disableButtonUList: PropTypes.bool,
 		disableButtonQuote: PropTypes.bool,
 		disableButtonLink: PropTypes.bool,
-		disableButtonImage: PropTypes.bool
-	}
+		disableButtonImage: PropTypes.bool,
+		disableAudioButton: PropTypes.bool
+	};
 	constructor(props) {
-    super(props);
-    this.state = {
+		super(props);
+		this.state = {
 			isFocused: false,
 			cs: {},
 			currentCodemirrorValue: props.value
 		};
-  }
+	}
 	componentDidMount() {
-		this.codeMirror = CM.fromTextArea(findDOMNode(this.refs.codemirror), this.getOptions());
+		this.codeMirror = CM.fromTextArea(
+			findDOMNode(this.refs.codemirror),
+			this.getOptions()
+		);
 		this.codeMirror.on('change', this.codemirrorValueChanged.bind(this));
 		this.codeMirror.on('focus', this.focusChanged.bind(this, true));
 		this.codeMirror.on('blur', this.focusChanged.bind(this, false));
 		this.codeMirror.on('cursorActivity', this.updateCursorState.bind(this));
 	}
 	getOptions() {
-		return Object.assign({
-			mode: 'markdown',
-			lineNumbers: false,
-			lineWrapping: true,
-			indentWithTabs: true,
-			tabSize: '2',
-		}, this.props.options);
+		return Object.assign(
+			{
+				mode: 'markdown',
+				lineNumbers: false,
+				lineWrapping: true,
+				indentWithTabs: true,
+				tabSize: '2'
+			},
+			this.props.options
+		);
 	}
 	componentWillUnmount() {
 		if (this.codeMirror) {
@@ -75,7 +83,10 @@ export class ReactMDEditor extends Component {
 		}
 	}
 	componentWillReceiveProps(newProps) {
-		if (this.codeMirror && this.state.currentCodemirrorValue !== newProps.value) {
+		if (
+			this.codeMirror &&
+			this.state.currentCodemirrorValue !== newProps.value
+		) {
 			this.codeMirror.setValue(newProps.value);
 		}
 	}
@@ -95,25 +106,36 @@ export class ReactMDEditor extends Component {
 	}
 	codemirrorValueChanged(doc, change) {
 		var newValue = doc.getValue();
-		this.setState( { currentCodemirrorValue: newValue });
+		this.setState({ currentCodemirrorValue: newValue });
 		this.props.onChange && this.props.onChange(newValue);
 	}
-	toggleFormat (formatKey, e) {
+	toggleFormat(formatKey, e) {
 		e.preventDefault();
 		applyFormat(this.codeMirror, formatKey);
 	}
-	renderIcon (icon) {
-		return <span dangerouslySetInnerHTML={{__html: icon}} className="MDEditor_toolbarButton_icon" />;
+	renderIcon(icon) {
+		return (
+			<span
+				dangerouslySetInnerHTML={{ __html: icon }}
+				className="MDEditor_toolbarButton_icon"
+			/>
+		);
 	}
-	renderButton (formatKey, label, action) {
+	renderButton(formatKey, label, action) {
 		if (!action) action = this.toggleFormat.bind(this, formatKey);
 
 		var isTextIcon = !Icons[formatKey];
-		var className = classNames('MDEditor_toolbarButton', {
-			'MDEditor_toolbarButton--pressed': this.state.cs[formatKey]
-		}, ('MDEditor_toolbarButton--' + formatKey));
+		var className = classNames(
+			'MDEditor_toolbarButton',
+			{
+				'MDEditor_toolbarButton--pressed': this.state.cs[formatKey]
+			},
+			'MDEditor_toolbarButton--' + formatKey
+		);
 
-		var labelClass = isTextIcon ? 'MDEditor_toolbarButton_label-icon' : 'MDEditor_toolbarButton_label';
+		var labelClass = isTextIcon
+			? 'MDEditor_toolbarButton_label-icon'
+			: 'MDEditor_toolbarButton_label';
 
 		return (
 			<button className={className} onClick={action} title={formatKey}>
@@ -122,7 +144,7 @@ export class ReactMDEditor extends Component {
 			</button>
 		);
 	}
-	renderToolbar () {
+	renderToolbar() {
 		return (
 			<div className="MDEditor_toolbar">
 				{!this.props.disableButtonH1 && this.renderButton('h1', 'h1')}
@@ -135,16 +157,29 @@ export class ReactMDEditor extends Component {
 				{!this.props.disableButtonQuote && this.renderButton('quote', 'q')}
 				{!this.props.disableButtonLink && this.renderButton('link', 'a')}
 				{!this.props.disableButtonImage && this.renderButton('image', 'img')}
+				{!this.props.disableAudioButton &&
+					this.renderButton('audio', 'Audio', e => {
+						this.props.onBeforeAudioClick(fileUrl => {
+							this.toggleFormat('audio', e);
+						});
+					})}
 			</div>
 		);
 	}
-	render () {
-		var editorClassName = classNames('MDEditor_editor', { 'MDEditor_editor--focused': this.state.isFocused });
+	render() {
+		var editorClassName = classNames('MDEditor_editor', {
+			'MDEditor_editor--focused': this.state.isFocused
+		});
 		return (
 			<div className="MDEditor">
 				{this.renderToolbar()}
 				<div className={editorClassName}>
-					<textarea ref="codemirror" name={this.props.path} defaultValue={this.props.value} autoComplete="off" />
+					<textarea
+						ref="codemirror"
+						name={this.props.path}
+						defaultValue={this.props.value}
+						autoComplete="off"
+					/>
 				</div>
 			</div>
 		);
