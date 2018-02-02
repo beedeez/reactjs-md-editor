@@ -1,6 +1,6 @@
 {
 	"name": "reactjs-md-editor",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "A markdown editor module for React",
 	"main": "lib/reactjs-md-editor.js",
 	"scripts": {
@@ -12,7 +12,11 @@
 		"type": "git",
 		"url": "git+https://github.com/beedeez/reactjs-md-editor.git"
 	},
-	"keywords": ["Markdown", "Editor", "React"],
+	"keywords": [
+		"Markdown",
+		"Editor",
+		"React"
+	],
 	"author": "Bastorx",
 	"license": "MIT",
 	"bugs": {
