@@ -5,5 +5,6 @@ module.exports = {
 	image: require('./image'),
 	uList: require('./uList'),
 	oList: require('./oList'),
-	quote: require('./quote')
+	quote: require('./quote'),
+	audio: require('./audio')
 };

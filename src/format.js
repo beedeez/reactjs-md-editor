@@ -82,11 +82,11 @@ const FORMATS = {
 	uList: { type: 'block', before: '* ', re: /^[\*\-]\s+/, placeholder: 'List' },
 	audio: {
 		type: 'block',
-		token: 'audio',
-		before: '[audio](',
+		token: 'img',
+		before: '![audio](',
 		after: ')',
-		re: /\[(?:[^\]]+)\]\(([^)]+)\)/,
-		placeholder: 'Audio'
+		re: /\!\[(?:[^\]]+)\]\(([^)]+)\)/,
+		placeholder: 'Image'
 	}
 };
 
@@ -128,19 +128,23 @@ export function getCursorState(cm, pos) {
 	return cs;
 }
 
-export function applyFormat(cm, key) {
+export function applyFormat(cm, key, content) {
 	var cs = getCursorState(cm);
 	var format = FORMATS[key];
-	operations[format.type + (cs[key] ? 'Remove' : 'Apply')](cm, format);
+	operations[format.type + (cs[key] ? 'Remove' : 'Apply')](cm, format, content);
 }
 
 var operations = {
-	inlineApply(cm, format) {
+	inlineApply(cm, format, content) {
 		var startPoint = cm.getCursor('start');
 		var endPoint = cm.getCursor('end');
-
-		cm.replaceSelection(format.before + cm.getSelection() + format.after);
-
+		if (content) {
+			cm.replaceSelection(
+				format.before + cm.getSelection() + content + format.after
+			);
+		} else {
+			cm.replaceSelection(format.before + cm.getSelection() + format.after);
+		}
 		startPoint.ch += format.before.length;
 		endPoint.ch += format.after.length;
 		cm.setSelection(startPoint, endPoint);
@@ -181,10 +185,14 @@ var operations = {
 		);
 		cm.focus();
 	},
-	blockApply(cm, format) {
+	blockApply(cm, format, content) {
 		var startPoint = cm.getCursor('start');
 		var line = cm.getLine(startPoint.line);
-		var text = format.before + ' ' + (line.length ? line : format.placeholder);
+		if (!line && content) line = content;
+		var text =
+			format.before +
+			(line.length ? line : format.placeholder) +
+			(format.after || '');
 		cm.replaceRange(
 			text,
 			{ line: startPoint.line, ch: 0 },

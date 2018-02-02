@@ -109,9 +109,10 @@ export class ReactMDEditor extends Component {
 		this.setState({ currentCodemirrorValue: newValue });
 		this.props.onChange && this.props.onChange(newValue);
 	}
-	toggleFormat(formatKey, e) {
+	toggleFormat(formatKey, e, content) {
 		e.preventDefault();
-		applyFormat(this.codeMirror, formatKey);
+		//this.codeMirror.setValue(content);
+		applyFormat(this.codeMirror, formatKey, content);
 	}
 	renderIcon(icon) {
 		return (
@@ -160,7 +161,7 @@ export class ReactMDEditor extends Component {
 				{!this.props.disableAudioButton &&
 					this.renderButton('audio', 'Audio', e => {
 						this.props.onBeforeAudioClick(fileUrl => {
-							this.toggleFormat('audio', e);
+							this.toggleFormat('audio', e, fileUrl);
 						});
 					})}
 			</div>
