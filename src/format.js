@@ -188,7 +188,7 @@ var operations = {
 	blockApply(cm, format, content) {
 		var startPoint = cm.getCursor('start');
 		var line = cm.getLine(startPoint.line);
-		if (!line && content) line = content;
+		if (content) line = content;
 		var text =
 			format.before +
 			(line.length ? line : format.placeholder) +
