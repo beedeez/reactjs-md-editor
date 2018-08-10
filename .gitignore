@@ -3,6 +3,9 @@ logs
 *.log
 npm-debug.log*
 
+# wml
+.watchmanconfig
+
 # Runtime data
 pids
 *.pid

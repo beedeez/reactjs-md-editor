@@ -157,7 +157,7 @@ export class ReactMDEditor extends Component {
 				{!this.props.disableButtonUList && this.renderButton('uList', 'ul')}
 				{!this.props.disableButtonQuote && this.renderButton('quote', 'q')}
 				{!this.props.disableButtonLink && this.renderButton('link', 'a')}
-				{!this.props.disableButtonImage && this.renderButton('image', 'img')}
+				{/* {!this.props.disableButtonImage && this.renderButton('image', 'img')} */}
 				{!this.props.disableAudioButton &&
 					this.renderButton('audio', 'Audio', e => {
 						this.props.onBeforeAudioClick(fileUrl => {
